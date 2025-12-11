@@ -17,7 +17,7 @@ public class usuarioService {
     @Autowired //para que se inicie junto con el repo y no se desconecten uno del otro
     private usuarioRepositorio usuarioRepo;
 
-    @Autowired // inyeccion apra buscar roles
+    @Autowired // inyeccion para buscar roles
     private rolRepositorio rolRepo;
 
     public List<usuario> listarUsuarios() {
