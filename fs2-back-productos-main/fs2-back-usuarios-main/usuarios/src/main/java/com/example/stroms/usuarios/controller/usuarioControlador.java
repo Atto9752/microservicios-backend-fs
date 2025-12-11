@@ -3,8 +3,10 @@ package com.example.stroms.usuarios.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,4 +49,12 @@ public class usuarioControlador {
     public usuario actualizarUsuario(@RequestParam int id, @RequestBody usuario usuarioActualizado) {
         return servicio.actualizarUsuario(id, usuarioActualizado);
     }
+
+    // PARA AUTORIZAR ACCESO A PANEL DE ADMINISTRADOR
+    @GetMapping("/rol/{username}")
+    public ResponseEntity<String> obtenerRolPorUsername(@PathVariable String username) {
+        String rol = servicio.obtenerRolPorUsername(username); 
+        return ResponseEntity.ok(rol); 
+    }
+
 }

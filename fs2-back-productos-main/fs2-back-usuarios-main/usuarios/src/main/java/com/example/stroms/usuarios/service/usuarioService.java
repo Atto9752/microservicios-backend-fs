@@ -59,5 +59,15 @@ public class usuarioService {
         return null;
     }
 
-
+    // para buscar rol por username
+    public String obtenerRolPorUsername(String username) {
+        Optional<usuario> usuarioOpt = usuarioRepo.findByNombre(username);
+        if (usuarioOpt.isPresent()) {
+            rol rolUsuario = usuarioOpt.get().getRol();
+            return rolUsuario.getNombreRol();
+        } else {
+            throw new RuntimeException("Usuario no encontrado");
+        }
+    }
+    
 }
