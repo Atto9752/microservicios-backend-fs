@@ -69,5 +69,21 @@ public class usuarioService {
             throw new RuntimeException("Usuario no encontrado");
         }
     }
-    
+
+
+    // para verificar credenciales
+    public boolean verificarCredenciales(String username, String contrasena) {
+        
+        Optional<usuario> usuarioOpt = usuarioRepo.findByNombre(username); 
+        
+        if (usuarioOpt.isPresent()) {
+            usuario user = usuarioOpt.get();
+            if (user.getContrasena().equals(contrasena)) {
+                return true;
+            }
+        }
+        
+        return false; // usuario no encontrado o contraseña incorrecta
+    }
+
 }

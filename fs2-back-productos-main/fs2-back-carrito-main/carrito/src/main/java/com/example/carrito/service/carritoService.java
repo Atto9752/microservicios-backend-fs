@@ -85,4 +85,31 @@ public class carritoService {
     public List<com.example.carrito.model.dto.UsuarioDTO> listarUsuariosExternos() {
         return usuarioClient.listarUsuarios();
     }
+
+
+    
+    public carrito finalizarCompra(Long idCarrito) {
+        Optional<carrito> carritoOpt = carritoRepo.findById(idCarrito);
+
+        if (carritoOpt.isPresent()) {
+            carrito carritoAComprar = carritoOpt.get();
+            
+            // 1. Verificar si ya fue comprado
+            if (carritoAComprar.isComprado()) {
+                throw new RuntimeException("El carrito con ID " + idCarrito + " ya fue finalizado/comprado.");
+            }
+            
+            // 2. Marcar como comprado
+            carritoAComprar.setComprado(true); 
+            
+            
+            // 3. Guardar el estado actualizado en la base de datos
+            return carritoRepo.save(carritoAComprar);
+            
+        } else {
+            throw new RuntimeException("Carrito con ID " + idCarrito + " no encontrado para finalizar compra.");
+        }
+    }
+
+
 }

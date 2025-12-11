@@ -38,5 +38,7 @@ public class carrito {
     @Transient //para no guardarlo en la base de datos y mostrar el total al usuario
     private Double total;
 
+    @Column(name = "COMPRADO", nullable = false)
+    private boolean comprado = false; // false por defecto
 
 }

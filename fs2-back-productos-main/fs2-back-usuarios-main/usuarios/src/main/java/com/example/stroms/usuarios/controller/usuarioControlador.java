@@ -1,6 +1,7 @@
 package com.example.stroms.usuarios.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.stroms.usuarios.model.dto.usuario;
 import com.example.stroms.usuarios.service.usuarioService;
 
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
 @RestController
 @RequestMapping("/api/v1/usuarios")
 @CrossOrigin(origins = "*")
@@ -26,6 +34,16 @@ public class usuarioControlador {
     @Autowired //para que cuando se levante el controlador se inicie el servicio 
     private usuarioService servicio;
 
+    // DTO para manejar la peticion del login
+    @Getter
+    @Setter
+    @Entity
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class LoginRequest {
+        private String username;
+        private String contrasena;
+    }
 
     @GetMapping("/all")
     public List<usuario> listarUsuarios() {
@@ -57,6 +75,20 @@ public class usuarioControlador {
     public ResponseEntity<String> obtenerRolPorUsername(@PathVariable String username) {
         String rol = servicio.obtenerRolPorUsername(username); 
         return ResponseEntity.ok(rol); 
+    }
+
+    // recibe el username y la contra del front y devuelve el rol si las credenciales son validas
+    @PostMapping("/login")
+    public ResponseEntity<Void> login(@RequestBody LoginRequest request) {
+        boolean valido = servicio.verificarCredenciales(request.getUsername(), request.getContrasena());
+        
+        if (valido) {
+            // credenciales correctas (200 ok)
+            return ResponseEntity.ok().build(); 
+        } else {
+            // credenciales incorrectas (401)
+            return ResponseEntity.status(401).build(); 
+        }
     }
 
 }
