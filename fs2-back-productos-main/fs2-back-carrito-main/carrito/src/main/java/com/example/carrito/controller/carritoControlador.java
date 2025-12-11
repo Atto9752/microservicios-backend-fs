@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.carrito.model.dto.carrito;
 import com.example.carrito.service.carritoService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/v1/carritos")
+@CrossOrigin(origins = "*")
 public class carritoControlador {
 
     @Autowired // para que cuando se levante el controlador se inicie el servicio
