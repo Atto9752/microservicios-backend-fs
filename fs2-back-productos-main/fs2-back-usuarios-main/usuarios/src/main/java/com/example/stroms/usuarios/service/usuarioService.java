@@ -72,18 +72,14 @@ public class usuarioService {
 
 
     // para verificar credenciales
-    public boolean verificarCredenciales(String username, String contrasena) {
-        
+    public Optional<usuario> verificarCredenciales(String username, String contrasena) {
+
         Optional<usuario> usuarioOpt = usuarioRepo.findByNombre(username); 
-        
-        if (usuarioOpt.isPresent()) {
-            usuario user = usuarioOpt.get();
-            if (user.getContrasena().equals(contrasena)) {
-                return true;
-            }
+
+        if (usuarioOpt.isPresent() && usuarioOpt.get().getContrasena().equals(contrasena)) {
+            return usuarioOpt;
         }
-        
-        return false; // usuario no encontrado o contraseña incorrecta
+        return Optional.empty();
     }
 
 }

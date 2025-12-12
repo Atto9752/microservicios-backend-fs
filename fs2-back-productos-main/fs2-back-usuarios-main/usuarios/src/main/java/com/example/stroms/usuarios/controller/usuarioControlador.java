@@ -2,6 +2,7 @@ package com.example.stroms.usuarios.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -79,16 +80,16 @@ public class usuarioControlador {
 
     // recibe el username y la contra del front y devuelve el rol si las credenciales son validas
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginRequest request) {
-        boolean valido = servicio.verificarCredenciales(request.getUsername(), request.getContrasena());
+    public ResponseEntity<Map<String, Integer>> login(@RequestBody LoginRequest request) {
         
-        if (valido) {
-            // credenciales correctas (200 ok)
-            return ResponseEntity.ok().build(); 
+        Optional<usuario> userOpt = servicio.verificarCredenciales(request.getUsername(), request.getContrasena());
+        
+        if (userOpt.isPresent()) {
+            return ResponseEntity.ok(Map.of("idUsuario", userOpt.get().getId())); 
         } else {
-            // credenciales incorrectas (401)
             return ResponseEntity.status(401).build(); 
         }
+
     }
 
 }
