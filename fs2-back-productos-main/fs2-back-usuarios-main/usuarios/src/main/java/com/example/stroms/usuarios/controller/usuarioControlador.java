@@ -38,7 +38,6 @@ public class usuarioControlador {
     // DTO para manejar la peticion del login
     @Getter
     @Setter
-    @Entity
     @AllArgsConstructor
     @NoArgsConstructor
     public static class LoginRequest {
