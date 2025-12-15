@@ -10,7 +10,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
     
-        final String S3_FRONTEND_URL = "http://bucket-app-stroms-solutions-s3.s3-website-us-east-1.amazonaws.com/";
+        final String S3_FRONTEND_URL = "http://bucket-app-stroms-solutions-s3.s3-website-us-east-1.amazonaws.com";
         
         registry.addMapping("/**") 
             .allowedOrigins(S3_FRONTEND_URL, "http://localhost:3000") 
